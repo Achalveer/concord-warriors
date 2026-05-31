@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="95" fill="#0a1628" stroke="#f0a500" stroke-width="3"/>
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#f0a500" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+  <circle cx="100" cy="72" r="22" fill="#c0392b"/>
+  <path d="M82 68 Q100 78 118 68" fill="none" stroke="#8B0000" stroke-width="1.5"/>
+  <path d="M82 76 Q100 86 118 76" fill="none" stroke="#8B0000" stroke-width="1.5"/>
+  <path d="M94 52 Q88 72 94 92" fill="none" stroke="#8B0000" stroke-width="1.5"/>
+  <path d="M106 52 Q112 72 106 92" fill="none" stroke="#8B0000" stroke-width="1.5"/>
+  <g transform="rotate(-35, 100, 100)">
+    <rect x="96" y="50" width="10" height="55" rx="3" fill="#f0a500"/>
+    <rect x="94" y="105" width="14" height="6" rx="2" fill="#d4920a"/>
+    <rect x="95.5" y="111" width="11" height="18" rx="2" fill="#b07800"/>
+  </g>
+  <path d="M60 58 Q75 52 88 58" fill="none" stroke="#f0a500" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M55 68 Q70 60 84 65" fill="none" stroke="#f0a500" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M58 78 Q73 72 85 74" fill="none" stroke="#f0a500" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+  <text x="100" y="122" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="16" fill="#f0a500" letter-spacing="3">CONCORD</text>
+  <line x1="30" y1="128" x2="170" y2="128" stroke="#f0a500" stroke-width="0.8" opacity="0.5"/>
+  <text x="100" y="148" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="2">WARRIORS</text>
+  <line x1="30" y1="154" x2="170" y2="154" stroke="#f0a500" stroke-width="0.8" opacity="0.5"/>
+  <text x="100" y="168" text-anchor="middle" font-family="Arial, sans-serif" font-weight="400" font-size="9" fill="#f0a500" letter-spacing="4">CRICKET CLUB</text>
+  <text x="38" y="150" font-size="8" fill="#f0a500" opacity="0.7">★</text>
+  <text x="155" y="150" font-size="8" fill="#f0a500" opacity="0.7">★</text>
+</svg>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 export default function Navbar() {
@@ -25,36 +26,28 @@ export default function Navbar() {
         <div className="container" style={{
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between',
-          height: '64px',
+          height: '68px',
         }}>
-          {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: 42, height: 42,
-              background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%)',
-              borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.3rem',
-            }}>🏏</div>
+            <Image src="/logo.svg" alt="Concord Warriors" width={50} height={50} />
             <div>
               <div style={{
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '1.3rem',
+                fontSize: '1.25rem',
                 letterSpacing: '0.1em',
                 color: 'var(--white)',
                 lineHeight: 1.1,
               }}>CONCORD WARRIORS</div>
               <div style={{
                 fontFamily: "'Barlow Condensed', sans-serif",
-                fontSize: '0.7rem',
+                fontSize: '0.65rem',
                 color: 'var(--gold)',
-                letterSpacing: '0.2em',
+                letterSpacing: '0.25em',
                 textTransform: 'uppercase',
               }}>Cricket Club</div>
             </div>
           </Link>
 
-          {/* Desktop Links */}
           <div style={{ display: 'flex', gap: '0.25rem' }} className="desktop-nav">
             {links.map(l => (
               <Link key={l.href} href={l.href} style={{
@@ -73,20 +66,14 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="hamburger"
-            style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: 'var(--white)', fontSize: '1.5rem', padding: '0.5rem',
-            }}
-          >
+          <button onClick={() => setOpen(!open)} className="hamburger" style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: 'var(--white)', fontSize: '1.5rem', padding: '0.5rem',
+          }}>
             {open ? '✕' : '☰'}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {open && (
           <div style={{
             background: 'var(--navy-mid)',

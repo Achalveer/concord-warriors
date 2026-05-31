@@ -58,4 +58,3 @@ npm run dev
 ## Multiple Leagues
 To support multiple leagues, update `pages/api/cricclubs.js` to accept
 `leagueId` as a query param, and add a league switcher to the fixtures/results pages.
-# concord-warriors

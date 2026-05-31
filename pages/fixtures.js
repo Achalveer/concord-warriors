@@ -1,23 +1,25 @@
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
 
-export default function Fixtures() {
-  const [fixtures, setFixtures] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const LEAGUES = [
+  {
+    id: 'sky',
+    label: 'SKY League',
+    tag: 'Latest',
+    url: 'https://cricclubs.com/SKYLeague/viewSchedule.do?clubId=1118462',
+  },
+  {
+    id: 'current',
+    label: 'CCC5 League',
+    tag: null,
+    url: 'https://cricclubs.com/viewSchedule.do?teamId=462&league=20&clubId=1102964',
+  },
+];
 
-  useEffect(() => {
-    fetch('/api/cricclubs?type=fixtures')
-      .then(r => r.json())
-      .then(d => {
-        setFixtures(d.data || []);
-        setLoading(false);
-      })
-      .catch(e => {
-        setError(e.message);
-        setLoading(false);
-      });
-  }, []);
+import { useState } from 'react';
+
+export default function Fixtures() {
+  const [activeLeague, setActiveLeague] = useState('sky');
+  const league = LEAGUES.find(l => l.id === activeLeague);
 
   return (
     <>
@@ -27,82 +29,69 @@ export default function Fixtures() {
 
       <div style={{ padding: '4rem 0' }}>
         <div className="container">
-          <div style={{ marginBottom: '3rem' }}>
+          <div style={{ marginBottom: '2rem' }}>
             <h1 className="section-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}>Fixtures</h1>
-            <p style={{ color: 'var(--grey)', marginTop: '0.5rem' }}>
-              Upcoming matches — live from{' '}
-              <a
-                href="https://cricclubs.com/viewTeam.do?teamId=462&league=20&clubId=1102964"
-                target="_blank" rel="noopener noreferrer"
-                style={{ color: 'var(--gold)' }}
-              >CricClubs</a>
-            </p>
+            <p style={{ color: 'var(--grey)', marginTop: '0.5rem' }}>Upcoming matches — live from CricClubs</p>
           </div>
 
-          {loading && (
-            <div className="loading-wrap">
-              <div className="spinner" />
-              <p>Loading fixtures from CricClubs...</p>
-            </div>
-          )}
+          {/* League Tabs */}
+          <div style={{
+            display: 'flex', gap: '0.5rem', marginBottom: '1.5rem',
+            borderBottom: '1px solid rgba(240,165,0,0.15)',
+          }}>
+            {LEAGUES.map(l => (
+              <button key={l.id} onClick={() => setActiveLeague(l.id)} style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                padding: '0.75rem 1.5rem',
+                fontFamily: "'Barlow Condensed', sans-serif",
+                fontWeight: 700, fontSize: '1rem',
+                letterSpacing: '0.08em', textTransform: 'uppercase',
+                color: activeLeague === l.id ? 'var(--gold)' : 'var(--grey)',
+                borderBottom: activeLeague === l.id ? '3px solid var(--gold)' : '3px solid transparent',
+                transition: 'color 0.2s',
+                display: 'flex', alignItems: 'center', gap: '0.5rem',
+              }}>
+                {l.label}
+                {l.tag && (
+                  <span style={{
+                    background: 'var(--gold)', color: 'var(--navy)',
+                    fontSize: '0.6rem', padding: '1px 6px', borderRadius: '10px',
+                    fontWeight: 700,
+                  }}>{l.tag}</span>
+                )}
+              </button>
+            ))}
+          </div>
 
-          {!loading && error && (
-            <div className="error-msg">
-              <p>Could not load fixtures automatically.</p>
-              <p style={{ marginTop: '1rem' }}>
-                <a href="https://cricclubs.com/viewTeam.do?teamId=462&league=20&clubId=1102964"
-                  target="_blank" rel="noopener noreferrer">
-                  View fixtures directly on CricClubs ↗
-                </a>
-              </p>
+          <div style={{
+            background: 'var(--navy-mid)',
+            border: '1px solid rgba(240,165,0,0.2)',
+            borderRadius: '12px', overflow: 'hidden',
+          }}>
+            <div style={{
+              background: 'var(--navy-light)',
+              borderBottom: '1px solid rgba(240,165,0,0.15)',
+              padding: '0.75rem 1.25rem',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            }}>
+              <span style={{
+                fontFamily: "'Barlow Condensed', sans-serif",
+                fontSize: '0.85rem', letterSpacing: '0.1em',
+                textTransform: 'uppercase', color: 'var(--gold)',
+              }}>
+                {league.label} — Schedule
+              </span>
+              <a href={league.url} target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: "'Barlow Condensed', sans-serif",
+                fontSize: '0.8rem', color: 'var(--grey)',
+              }}>Open full page ↗</a>
             </div>
-          )}
-
-          {!loading && !error && fixtures.length === 0 && (
-            <div className="error-msg">
-              <p>No upcoming fixtures found.</p>
-              <p style={{ marginTop: '1rem' }}>
-                <a href="https://cricclubs.com/viewTeam.do?teamId=462&league=20&clubId=1102964"
-                  target="_blank" rel="noopener noreferrer">
-                  Check CricClubs directly ↗
-                </a>
-              </p>
-            </div>
-          )}
-
-          {!loading && fixtures.length > 0 && (
-            <div style={{ overflowX: 'auto' }}>
-              <table className="data-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Match</th>
-                    <th>Venue</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {fixtures.map((f, i) => (
-                    <tr key={i}>
-                      <td style={{ whiteSpace: 'nowrap', color: 'var(--gold)' }}>{f.date}</td>
-                      <td style={{ fontWeight: 600 }}>{f.teams || f.match}</td>
-                      <td style={{ color: 'var(--grey)' }}>{f.venue || '—'}</td>
-                      <td><span className="badge badge-upcoming">Upcoming</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-            <a
-              href="https://cricclubs.com/viewTeam.do?teamId=462&league=20&clubId=1102964"
-              target="_blank" rel="noopener noreferrer"
-              className="btn btn-outline"
-            >
-              View Full Schedule on CricClubs ↗
-            </a>
+            <iframe
+              key={league.url}
+              src={league.url}
+              style={{ width: '100%', height: '600px', border: 'none', display: 'block', background: '#fff' }}
+              title={`${league.label} Fixtures`}
+            />
           </div>
         </div>
       </div>
